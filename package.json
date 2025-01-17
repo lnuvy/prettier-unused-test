@@ -1,6 +1,6 @@
 {
   "name": "prettier-remove-unused-only",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "prettier-plugin-organize-imports 에서 unused만 사용하게 변경한 플러그인",
   "keywords": [
     "prettier",

@@ -14,6 +14,7 @@ for (const macro of macros) {
 			return null;
 		};`,
 		'import { useEffect } from "react";',
+		{ transformer: (res) => res.split('\n')[0] }
 	);
 
 	test(
