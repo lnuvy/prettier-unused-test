@@ -19,7 +19,7 @@ module.exports.getMacro = (parser) =>
 		 * @param {string} expected
 		 * @param {{ options?: import('prettier').Options; transformer?: (res: string) => string }} [options]
 		 */
-		async exec(t, input, expected, { options = {}, transformer = (res) => res.split('\n')[0] } = {}) {
+		async exec(t, input, expected, { options = {}, transformer = (res) => res } = {}) {
 			const formattedCode = await module.exports.prettify(input, { parser, ...options });
 
 			t.is(transformer(formattedCode), expected);

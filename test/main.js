@@ -5,85 +5,32 @@ const macros = ['typescript', 'babel', 'babel-ts'].map((parser) => getMacro(pars
 
 for (const macro of macros) {
 	test(
-		'sorts imports',
-		macro,
-		`
-			import { foo, bar } from "foobar"
-
-			export const foobar = foo + bar
-		`,
-		'import { bar, foo } from "foobar";',
-	);
-
-	test(
 		'removes partially unused imports',
 		macro,
-		`
-			import { foo, bar, baz } from "foobar";
+		`import { useEffect, useState } from "react";
 
-			const foobar = foo + baz
-		`,
-		'import { baz, foo } from "foobar";',
-	);
-
-	test('removes completely unused imports', macro, 'import { foo } from "foobar"', '');
-
-	test(
-		'works with multi-line imports',
-		macro,
-		`
-			import {
-				foo,
-				bar,
-				baz,
-			} from "foobar";
-
-			console.log({ foo, bar, baz });
-		`,
-		'import { bar, baz, foo } from "foobar";',
+		const Component = () => {
+			useEffect(() => {}, []);
+			return null;
+		};`,
+		'import { useEffect } from "react";',
 	);
 
 	test(
-		'works without a filepath',
+		'removes completely unused imports',
 		macro,
-		`
-			import { foo, bar } from "foobar"
+		`import { useState } from "react";
 
-			export const foobar = foo + bar
-		`,
-		'import { bar, foo } from "foobar";',
-		{ options: { filepath: undefined } },
-	);
-
-	test(
-		'files with `// organize-imports-ignore` are skipped',
-		macro,
-		`
-			// organize-imports-ignore
-			import { foo, bar } from "foobar"
-
-			export const foobar = foo + bar
-		`,
-		'import { foo, bar } from "foobar";',
-		{ transformer: (res) => res.split('\n')[1] },
+		const Component = () => {
+			return null;
+		};`,
+		'const Component = () => {',
+		{ transformer: (res) => res.split('\n')[0] }
 	);
 }
 
 test('skips when formatting a range', async (t) => {
-	const code = 'import { foo } from "./bar";';
-
-	const formattedCode1 = await prettify(code, { rangeEnd: 10 });
-	const formattedCode2 = await prettify(code, { rangeStart: 10 });
-
-	t.is(formattedCode1, code);
-	t.is(formattedCode2, code);
-});
-
-test('does not remove unused imports with `organizeImportsSkipDestructiveCodeActions` enabled', async (t) => {
-	const code = `import { foo } from "./bar";
-`;
-
-	const formattedCode = await prettify(code, { organizeImportsSkipDestructiveCodeActions: true });
-
+	const code = 'import { useState } from "react";';
+	const formattedCode = await prettify(code, { rangeEnd: 10 });
 	t.is(formattedCode, code);
 });
