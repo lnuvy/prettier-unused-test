@@ -1,7 +1,7 @@
 {
-  "name": "prettier-plugin-organize-imports",
-  "version": "4.1.0",
-  "description": "Make prettier organize your imports using the TypeScript language service API.",
+  "name": "prettier-remove-unused-only",
+  "version": "0.0.1",
+  "description": "prettier-plugin-organize-imports 에서 unused만 사용하게 변경한 플러그인",
   "keywords": [
     "prettier",
     "prettier-plugin",
@@ -57,5 +57,6 @@
         }
       }
     ]
-  }
+  },
+  "packageManager": "pnpm@9.15.3"
 }
